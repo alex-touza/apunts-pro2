@@ -14,6 +14,7 @@ const EditProfileModal = ({ isOpen, onClose, user, onUpdate }: any) => {
     const [username, setUsername] = useState(user?.username || '');
     const [portfolio, setPortfolio] = useState(user?.portfolio || '');
     const [avatar, setAvatar] = useState(user?.avatar || '');
+    const [banner, setBanner] = useState(user?.banner || '');
     const [bio, setBio] = useState(user?.bio || '');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -22,6 +23,7 @@ const EditProfileModal = ({ isOpen, onClose, user, onUpdate }: any) => {
             setUsername(user.username);
             setPortfolio(user.portfolio || '');
             setAvatar(user.avatar || '');
+            setBanner(user.banner || '');
             setBio(user.bio || '');
         }
     }, [user]);
@@ -30,7 +32,7 @@ const EditProfileModal = ({ isOpen, onClose, user, onUpdate }: any) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await onUpdate({ username, portfolio, avatar, bio });
+            await onUpdate({ username, portfolio, avatar, banner, bio });
             onClose();
         } catch (error) {
             console.error("Error updating profile:", error);
@@ -71,6 +73,16 @@ const EditProfileModal = ({ isOpen, onClose, user, onUpdate }: any) => {
                             value={avatar}
                             onChange={(e) => setAvatar(e.target.value)}
                             className="w-full bg-slate-900 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-sky-500 outline-none"
+                        />
+                    </div>
+                    <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-400 uppercase">Banner URL</label>
+                        <input
+                            type="text"
+                            value={banner}
+                            onChange={(e) => setBanner(e.target.value)}
+                            className="w-full bg-slate-900 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-sky-500 outline-none"
+                            placeholder="https://imatge-banner.com/foto.jpg"
                         />
                     </div>
                     <div className="space-y-1">
