@@ -69,31 +69,43 @@ const TopicCarousel: React.FC = () => {
         }
     };
 
-    useEffect(() => {
+    // Track active index based on scroll position (more robust for Safari than IntersectionObserver)
+    const handleScroll = () => {
+        if (!scrollRef.current) return;
         const container = scrollRef.current;
-        if (!container) return;
+        const containerCenter = container.scrollLeft + (container.clientWidth / 2);
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const id = Number(entry.target.getAttribute('data-index'));
-                        setActiveIndex(id);
-                    }
-                });
-            },
-            {
-                root: container,
-                threshold: 0.5,
-                rootMargin: "0px -40% 0px -40%"
+        let closestIndex = 0;
+        let minDistance = Number.MAX_VALUE;
+
+        // Find card closest to center
+        Array.from(container.children).forEach((child, index) => {
+            if (!child.classList.contains('carousel-card')) return;
+
+            const card = child as HTMLElement;
+            const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+            const distance = Math.abs(containerCenter - cardCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
             }
-        );
-
-        Array.from(container.children).forEach((child) => {
-            if (child.classList.contains('carousel-card')) observer.observe(child);
         });
 
-        return () => observer.disconnect();
+        if (closestIndex !== activeIndex) {
+            setActiveIndex(closestIndex);
+        }
+    };
+
+    // Keep active index updated on mount and scroll
+    useEffect(() => {
+        handleScroll();
+        // Add scroll listener with passive option for performance
+        const container = scrollRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll, { passive: true });
+            return () => container.removeEventListener('scroll', handleScroll);
+        }
     }, []);
 
     return (
