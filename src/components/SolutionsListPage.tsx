@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Check, ArrowLeft, Terminal, Code2, Search, Plus, Loader } from 'lucide-react';
+import { Check, ArrowLeft, Code2, Search, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { topics } from '../data/notes';
 import { useAuth } from '../contexts/AuthContext';
@@ -8,7 +8,7 @@ import { useSolutions } from '../hooks/useSolutions';
 
 const SolutionsListPage = () => {
     const { id: topicId } = useParams();
-    const { solutions, loading } = useSolutions(topicId || '');
+    const { solutions } = useSolutions(topicId || '');
     const topic = topics.find(t => t.id === topicId);
     const [searchQuery, setSearchQuery] = useState('');
     const { user } = useAuth();

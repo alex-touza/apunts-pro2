@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { X, BookOpen, ChevronRight, Menu, ArrowLeft, User, LogIn } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { X, BookOpen, ChevronRight, Menu, ArrowLeft, LogIn } from 'lucide-react';
 import { topics } from '../data/notes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
@@ -8,7 +8,6 @@ import { useAuth } from '../contexts/AuthContext';
 const Navigation: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
     const { user } = useAuth();
 
     return (
