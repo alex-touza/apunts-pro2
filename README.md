@@ -1,73 +1,345 @@
-# React + TypeScript + Vite
+# 📚 Apunts PRO2
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Una plataforma moderna i interactiva per compartir apunts, solucionaris i recursos del curs de **Programació 2** (PRO2) a la UPC.
 
-Currently, two official plugins are available:
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Característiques
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🎨 **Interfície moderna** amb animacions fluides (Framer Motion)
+- 📝 **Editor de notes** en temps real amb suport Markdown
+- 💻 **Solucionaris del Jutge** amb syntax highlighting (PrismJS)
+- 🔐 **Autenticació segura** amb Firebase Authentication
+- 🗂️ **Organització per temes** amb navegació intuïtiva
+- 🌐 **Proxy del Jutge.org** per obtenir enunciats automàticament
+- 📱 **Responsive design** optimitzat per a mòbil i desktop
+- 🚀 **Deploy automàtic** a Vercel
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Stack Tecnològic
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Frontend
+- **React 19** - Biblioteca UI amb les últimes millores de rendiment
+- **TypeScript** - Tipat estàtic per a codi més robust
+- **Vite** - Build tool ràpid i modern
+- **TailwindCSS v4** - Framework CSS utility-first
+- **Framer Motion** - Animacions i transicions fluides
+- **React Router v7** - Routing del client
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Backend & Services
+- **Firebase** - Autenticació i base de dades (Firestore)
+- **Vercel Serverless Functions** - API proxy per Jutge.org
+- **Cheerio** - Web scraping per obtenir enunciats
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Eines de Desenvolupament
+- **ESLint** - Linter per mantenir codi consistent
+- **PrismJS** - Syntax highlighting per a codi
+- **Lucide React** - Icones modernes
+
+---
+
+## 🚀 Instal·lació i Configuració
+
+### Prerequisits
+
+- **Node.js** >= 18.0.0
+- **npm** o **pnpm**
+- Compte de **Firebase** (opcional, només per autenticació)
+
+### Pas 1: Clonar el repositori
+
+```bash
+git clone https://github.com/CreatorSaWiX/apunts-pro2.git
+cd apunts-pro2
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Pas 2: Instal·lar dependències
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# o
+pnpm install
 ```
+
+### Pas 3: Configurar variables d'entorn
+
+Crea un fitxer `.env` a l'arrel del projecte:
+
+```env
+# Credencials del Jutge.org (opcional, per obtenir enunciats)
+JUTGE_EMAIL="el.teu.email@estudiantat.upc.edu"
+JUTGE_PASSWORD="la_teva_contrasenya"
+```
+
+**⚠️ IMPORTANT:** El fitxer `.env` està protegit pel `.gitignore` i **mai** es pujarà a GitHub. No comparteixis les teves credencials!
+
+### Pas 4: Configurar Firebase (opcional)
+
+Si vols habilitar l'autenticació i base de dades:
+
+1. Crea un projecte a [Firebase Console](https://console.firebase.google.com/)
+2. Activa **Authentication** (Email/Password)
+3. Crea una base de dades **Firestore**
+4. Copia les credencials de configuració a `src/lib/firebase.ts`
+
+### Pas 5: Executar en mode desenvolupament
+
+```bash
+npm run dev
+```
+
+L'aplicació estarà disponible a `http://localhost:5173` 🎉
+
+---
+
+## 🤝 Guia de Contribució
+
+**Totes les contribucions són benvingudes!** 💪 Sigui que vulguis afegir nous apunts, millorar el codi, o reportar bugs, la teva ajuda és valuosa.
+
+### Com contribuir
+
+#### 1. **Fork del repositori**
+
+Clica el botó "Fork" a la part superior dreta d'aquesta pàgina.
+
+#### 2. **Clona el teu fork**
+
+```bash
+git clone https://github.com/EL-TEU-USUARI/apunts-pro2.git
+cd apunts-pro2
+```
+
+#### 3. **Crea una nova branca**
+
+Utilitza noms descriptius per a les teves branques:
+
+```bash
+# Per a noves funcionalitats
+git checkout -b feature/nom-de-la-funcionalitat
+
+# Per a correccions de bugs
+git checkout -b fix/descripcio-del-bug
+
+# Per a millores de documentació
+git checkout -b docs/descripcio-millora
+```
+
+#### 4. **Fes els teus canvis**
+
+- Segueix l'estil de codi existent
+- Comenta el codi quan sigui necessari
+- Assegura't que el codi compila sense errors (`npm run build`)
+- Comprova el linter (`npm run lint`)
+
+#### 5. **Commit dels canvis**
+
+Utilitza missatges de commit descriptius:
+
+```bash
+git add .
+git commit -m "feat: afegida secció de teoria sobre arbres binaris"
+```
+
+**Format recomanat de commits:**
+- `feat:` - Nova funcionalitat
+- `fix:` - Correcció de bug
+- `docs:` - Canvis en documentació
+- `style:` - Canvis de format (no afecten el codi)
+- `refactor:` - Refactorització de codi
+- `test:` - Afegir o modificar tests
+- `chore:` - Tasques de manteniment
+
+#### 6. **Push a la teva branca**
+
+```bash
+git push origin nom-de-la-teva-branca
+```
+
+#### 7. **Obre un Pull Request**
+
+- Ves al repositori original a GitHub
+- Clica "New Pull Request"
+- Selecciona la teva branca
+- Descriu els canvis que has fet
+- Espera el review! 🎯
+
+---
+
+## 📂 Contribuir amb Contingut
+
+### Afegir Apunts
+
+Els apunts es troben a `src/data/notes.ts`. Per afegir nous apunts:
+
+```typescript
+{
+  id: 'nom-unic-apunt',
+  title: 'Títol de l\'Apunt',
+  content: `
+    ## Secció 1
+    Contingut en **Markdown**...
+  `,
+  author: 'El Teu Nom',
+  topicId: 'tema1' // Tema corresponent
+}
+```
+
+### Afegir Solucionaris
+
+Els solucionaris es troben a `src/data/solutions.ts`:
+
+```typescript
+{
+  id: 'P12345',
+  title: 'Nom del Problema',
+  difficulty: 'medium', // easy, medium, hard
+  topicId: 'tema1',
+  code: `
+    // El teu codi C++ aquí
+    #include <iostream>
+    using namespace std;
+    
+    int main() {
+      // ...
+    }
+  `
+}
+```
+
+### Afegir Nous Temes
+
+Edita `src/data/courseStructure.ts` per afegir nous temes:
+
+```typescript
+{
+  id: 'tema-nou',
+  title: 'Títol del Tema',
+  description: 'Descripció breu',
+  icon: 'IconName' // Icona de Lucide React
+}
+```
+
+---
+
+## 🏗️ Estructura del Projecte
+
+```
+apunts-pro2/
+├── api/
+│   └── jutge-proxy.ts          # Serverless function per obtenir enunciats
+├── src/
+│   ├── components/             # Components reutilitzables
+│   │   ├── Hero.tsx
+│   │   ├── Navigation.tsx
+│   │   ├── TopicCarousel.tsx
+│   │   └── ui/                 # Components UI base
+│   ├── contexts/               # React Contexts (Auth, etc.)
+│   ├── data/                   # Dades estàtiques
+│   │   ├── courseStructure.ts  # Estructura de temes
+│   │   ├── notes.ts            # Apunts
+│   │   └── solutions.ts        # Solucionaris
+│   ├── hooks/                  # Custom React hooks
+│   ├── lib/                    # Utilitats i configuració
+│   ├── pages/                  # Pàgines de l'aplicació
+│   ├── utils/                  # Funcions utilitat
+│   └── App.tsx                 # Component principal
+├── .env                        # Variables d'entorn (NO PUJAR!)
+├── .gitignore                  # Fitxers ignorats per Git
+├── package.json                # Dependències del projecte
+└── vite.config.ts              # Configuració de Vite
+```
+
+---
+
+## 🧪 Scripts Disponibles
+
+```bash
+npm run dev      # Inicia el servidor de desenvolupament
+npm run build    # Compila el projecte per a producció
+npm run preview  # Preview de la build de producció
+npm run lint     # Executa ESLint per revisar el codi
+```
+
+---
+
+## 🐛 Reportar Bugs
+
+Si trobes un bug, si us plau obre un **Issue** amb:
+
+1. **Descripció clara** del problema
+2. **Passos per reproduir** el bug
+3. **Comportament esperat** vs. comportament actual
+4. **Screenshots** (si és possible)
+5. **Entorn** (navegador, sistema operatiu, etc.)
+
+---
+
+## 💡 Bones Pràctiques
+
+### Seguretat
+- ❌ **Mai** pugis el fitxer `.env` a GitHub
+- ✅ Utilitza variables d'entorn per credencials
+- ✅ Revisa que `.gitignore` està actualitzat abans de fer commit
+
+### Codi
+- ✅ Escriu codi TypeScript tipat (evita `any`)
+- ✅ Utilitza components funcionals amb hooks
+- ✅ Segueix la convenció de noms existent
+- ✅ Comenta funcions complexes
+
+### Commits
+- ✅ Commits petits i atòmics
+- ✅ Missatges descriptius
+- ✅ Una funcionalitat per commit
+
+---
+
+## 📄 Llicència
+
+Aquest projecte està sota llicència **MIT**. Veure el fitxer [LICENSE](LICENSE) per més detalls.
+
+---
+
+## 👥 Autors
+
+- **CreatorSaWiX** - *Creador i mantenidor principal* - [@CreatorSaWiX](https://github.com/CreatorSaWiX)
+
+### Contributors
+
+Gràcies a totes les persones que han contribuït a aquest projecte! 🙏
+
+*(Aquí apareixeràn automàticament els contributors quan facin Pull Requests)*
+
+---
+
+## 🌟 Suport
+
+Si aquest projecte t'ha ajudat, considera:
+
+- ⭐ Donar-li una estrella a GitHub
+- 🍴 Fer un fork i contribuir
+- 📢 Compartir-lo amb els teus companys
+- 💬 Deixar comentaris o suggeriments
+
+---
+
+## 📞 Contacte
+
+Tens dubtes o suggeriments? Obre un **Issue** o contacta'm a través de GitHub!
+
+---
+
+<div align="center">
+
+**Fet amb ❤️ per estudiants, per a estudiants**
+
+📚 PRO2 @ FIB - UPC
+
+</div>
