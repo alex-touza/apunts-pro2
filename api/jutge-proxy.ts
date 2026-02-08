@@ -198,6 +198,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             }
         });
 
+
+        // Cache per 1 dia (CDN) i fins a 1 setmana stale-while-revalidate
+        res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800');
+
         return res.status(200).json({
             id: cleanId,
             title: title,

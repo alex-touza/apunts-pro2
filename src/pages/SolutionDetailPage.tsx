@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useSolution, useSolutions } from '../hooks/useSolutions';
 import CodeBlock from '../components/ui/CodeBlock';
 import { useAuth } from '../contexts/AuthContext';
-import { courseStructure } from '../data/courseStructure';
+import { courseStructure } from '../content/data/courseStructure';
 
 const SolutionDetailPage = () => {
     const { id: topicId, problemId } = useParams();

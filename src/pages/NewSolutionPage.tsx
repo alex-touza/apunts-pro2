@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, Save, Code, FileText, Layout, Info } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { topics } from '../data/notes';
+import { allPersonalNotes } from 'content-collections';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -92,8 +92,8 @@ const NewSolutionPage = () => {
                                 required
                             >
                                 <option value="" disabled>Selecciona un tema</option>
-                                {topics.map(t => (
-                                    <option key={t.id} value={t.id}>{t.title}</option>
+                                {allPersonalNotes.sort((a, b) => a.order - b.order).map(t => (
+                                    <option key={t.slug} value={t.slug}>{t.title}</option>
                                 ))}
                             </select>
                         </div>

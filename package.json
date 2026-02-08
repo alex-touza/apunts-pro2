@@ -10,20 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@content-collections/core": "^0.13.1",
+    "@content-collections/markdown": "^0.1.4",
+    "@content-collections/vite": "^0.2.8",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
     "@types/prismjs": "^1.26.5",
     "@vercel/node": "^5.5.33",
     "cheerio": "^1.2.0",
     "clsx": "^2.1.1",
+    "content-collections": "^0.2.1",
     "firebase": "^12.9.0",
     "framer-motion": "^12.33.0",
     "lucide-react": "^0.563.0",
     "prismjs": "^1.30.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "vite-plugin-pwa": "^1.2.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

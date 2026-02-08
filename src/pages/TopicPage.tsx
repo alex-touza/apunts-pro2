@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { topics } from '../data/notes';
-import NoteSection from '../components/NoteSection';
+import { allPersonalNotes } from 'content-collections';
+import ReactMarkdown from 'react-markdown';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import CodeBlock from '../components/ui/CodeBlock';
 
 const TopicPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const topicIndex = topics.findIndex(t => t.id === id);
-    const topic = topics[topicIndex];
+    const topic = allPersonalNotes.find(note => note.slug === id);
 
     // Scroll Progress
     const { scrollYProgress } = useScroll();
@@ -18,8 +18,10 @@ const TopicPage: React.FC = () => {
         restDelta: 0.001
     });
 
-    const prevTopic = topics[topicIndex - 1];
-    const nextTopic = topics[topicIndex + 1];
+    const sortedTopics = [...allPersonalNotes].sort((a, b) => a.order - b.order);
+    const currentIndex = sortedTopics.findIndex(t => t.slug === id);
+    const prevTopic = currentIndex > 0 ? sortedTopics[currentIndex - 1] : undefined;
+    const nextTopic = currentIndex < sortedTopics.length - 1 ? sortedTopics[currentIndex + 1] : undefined;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -37,29 +39,56 @@ const TopicPage: React.FC = () => {
                 style={{ scaleX }}
             />
 
-            <div className="pt-14 pb-20 px-4 max-w-5xl mx-auto">
+            <div className="pt-28 pb-20 px-4 max-w-4xl mx-auto">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="mb-2 border-b border-white/5 pb-4"
+                    className="mb-8 border-b border-white/5 pb-8"
                 >
-                    <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">
+                    <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
                         {topic.title}
                     </h1>
+                    <div className="flex items-center gap-4 text-slate-400 text-sm font-mono">
+                        <span>{topic.readTime || '5 min'} lectura</span>
+                        <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+                        <span>{topic.description}</span>
+                    </div>
                 </motion.div>
 
                 {/* Content */}
                 <div className="prose prose-invert prose-lg max-w-none">
-                    <NoteSection section={topic} index={0} />
+                    <ReactMarkdown
+                        components={{
+                            code(props) {
+                                const { children, className, node, ...rest } = props
+                                const match = /language-(\w+)/.exec(className || '')
+                                return match ? (
+                                    <div className="not-prose my-6">
+                                        <CodeBlock
+                                            code={String(children).replace(/\n$/, '')}
+                                            language={match[1]}
+                                            title={match[1] === 'cpp' ? 'C++' : match[1]}
+                                        />
+                                    </div>
+                                ) : (
+                                    <code {...rest} className={className}>
+                                        {children}
+                                    </code>
+                                )
+                            }
+                        }}
+                    >
+                        {topic.content}
+                    </ReactMarkdown>
                 </div>
 
                 {/* Navigation Footer */}
                 <div className="mt-20 pt-10 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-6">
                     {prevTopic ? (
                         <Link
-                            to={`/tema/${prevTopic.id}`}
+                            to={`/tema/${prevTopic.slug}`}
                             className="group relative p-6 rounded-3xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all overflow-hidden"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-sky-500/0 via-sky-500/0 to-sky-500/0 group-hover:via-sky-500/5 transition-all duration-500" />
@@ -76,7 +105,7 @@ const TopicPage: React.FC = () => {
 
                     {nextTopic ? (
                         <Link
-                            to={`/tema/${nextTopic.id}`}
+                            to={`/tema/${nextTopic.slug}`}
                             className="group relative p-6 rounded-3xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10 transition-all overflow-hidden text-right"
                         >
                             <div className="absolute inset-0 bg-gradient-to-l from-sky-500/0 via-sky-500/0 to-sky-500/0 group-hover:via-sky-500/5 transition-all duration-500" />

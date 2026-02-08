@@ -45,5 +45,59 @@ export const courseStructure: TopicDefinition[] = [
         title: "Tema 4: Arbres",
         description: "Arbres binaris, recorreguts i arbres generals.",
         problems: []
+    },
+    {
+        id: "tema-5",
+        title: "Tema 5: Arbres Generals",
+        description: "Estructures arborescents no lineals.",
+        problems: []
+    },
+    {
+        id: "tema-6",
+        title: "Tema 6: Arbres Binaris",
+        description: "Propietats i recorreguts d'arbres binaris.",
+        problems: []
+    },
+    {
+        id: "parcial-pro2",
+        title: "Parcial PRO2",
+        description: "Recull d'exàmens parcials i exercicis de preparació.",
+        problems: []
+    },
+    {
+        id: "tema-7",
+        title: "Tema 7: Cues de Prioritat i Heaps",
+        description: "Implementació i ús de cues de prioritat.",
+        problems: []
+    },
+    {
+        id: "tema-8",
+        title: "Tema 8: Diccionaris i ABB",
+        description: "Arbres Binaris de Cerca i la seva aplicació en diccionaris.",
+        problems: []
+    },
+    {
+        id: "tema-9",
+        title: "Tema 9: Cerca i Ordenació",
+        description: "Algorismes fonamentals de cerca i ordenació.",
+        problems: []
+    },
+    {
+        id: "tema-10",
+        title: "Tema 10: Grafs",
+        description: "Introducció als grafs i els seus algorismes bàsics.",
+        problems: []
+    },
+    {
+        id: "tema-11",
+        title: "Tema 11: Disseny d'Algorismes",
+        description: "Estratègies avançades: Divide & Conquer, Greedy...",
+        problems: []
+    },
+    {
+        id: "examens-finals",
+        title: "Exàmens Finals",
+        description: "Recull d'exàmens finals d'anys anteriors.",
+        problems: []
     }
 ];

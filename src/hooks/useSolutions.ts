@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { allSolutions } from '../data/solutions';
-import type { Solution } from '../data/solutions';
+import { allSolutions } from '../content/data/solutions';
+import type { Solution } from '../content/data/solutions';
 
 export const useSolutions = (topicId: string) => {
     const [solutions, setSolutions] = useState<Solution[]>([]);

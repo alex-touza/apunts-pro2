@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Search, Check, Code2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSolutions } from '../hooks/useSolutions';
-import { courseStructure } from '../data/courseStructure';
+import { courseStructure } from '../content/data/courseStructure';
 
 const SolutionsListPage = () => {
     const { id: topicId } = useParams();

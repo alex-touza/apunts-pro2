@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { topics } from '../data/notes';
+import { allPersonalNotes } from 'content-collections';
 import { ArrowRight, Book, Terminal } from 'lucide-react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 
@@ -51,6 +51,7 @@ const TopicCarousel: React.FC = () => {
     const navigate = useNavigate();
     const [activeIndex, setActiveIndex] = useState(0);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const sortedTopics = [...allPersonalNotes].sort((a, b) => a.order - b.order);
 
     const scrollTo = (index: number) => {
         if (!scrollRef.current) return;
@@ -130,12 +131,12 @@ const TopicCarousel: React.FC = () => {
                     px-[calc(50%-160px)] md:px-[calc(50%-190px)]
                 "
             >
-                {topics.map((topic, i) => {
+                {sortedTopics.map((topic, i) => {
                     const isActive = activeIndex === i;
 
                     return (
                         <div
-                            key={topic.id}
+                            key={topic.slug}
                             draggable="false"
                             data-index={i}
                             className={`carousel-card flex-shrink-0 snap-center outline-none transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${isActive ? 'scale-100 z-10' : 'scale-90 opacity-40 blur-[2px] grayscale-[0.5] hover:opacity-60 hover:scale-95'
@@ -146,7 +147,7 @@ const TopicCarousel: React.FC = () => {
                                     scrollTo(i);
                                 } else {
                                     // Navigate to topic on click
-                                    navigate(`/tema/${topic.id}`);
+                                    navigate(`/tema/${topic.slug}`);
                                 }
                             }}
                         >
@@ -184,7 +185,13 @@ const TopicCarousel: React.FC = () => {
                                             font-mono text-6xl font-bold transition-all duration-500
                                             ${isActive ? 'text-white/10' : 'text-white/5'}
                                         `}>
-                                            {String(i + 1).padStart(2, '0')}
+                                            {(() => {
+                                                const match = topic.title.match(/^Tema (\d+)/);
+                                                if (match) return match[1].padStart(2, '0');
+                                                if (topic.title.toLowerCase().includes('parcial')) return 'P1';
+                                                if (topic.title.toLowerCase().includes('final')) return 'EF';
+                                                return String(i + 1).padStart(2, '0');
+                                            })()}
                                         </span>
                                     </div>
 
@@ -222,7 +229,7 @@ const TopicCarousel: React.FC = () => {
                                         </div>
 
                                         <Link
-                                            to={`/tema/${topic.id}/solucionaris`}
+                                            to={`/tema/${topic.slug}/solucionaris`}
                                             onClick={(e) => e.stopPropagation()}
                                             className="text-slate-500 hover:text-emerald-400 text-sm font-medium flex items-center gap-2 transition-colors w-fit group/sol"
                                         >
@@ -243,7 +250,7 @@ const TopicCarousel: React.FC = () => {
             {/* Elegant Pagination Indicators */}
             {/* Elegant Pagination Indicators */}
             <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-50">
-                {topics.map((_, i) => (
+                {sortedTopics.map((_, i) => (
                     <button
                         key={i}
                         onClick={() => scrollTo(i)}
