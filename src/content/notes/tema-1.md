@@ -38,7 +38,7 @@ Una **Classe** és com una struct, però amb una diferència clau: la visibilita
 
 ### Comparació: Struct vs Class
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+:::div{.grid .grid-cols-1 .md:grid-cols-2 .gap-4}
 
 ```cpp
 // Punt.hpp (Especificació)
@@ -87,4 +87,4 @@ double Punt::distancia() const {
 }
 ```
 
-</div>
+:::

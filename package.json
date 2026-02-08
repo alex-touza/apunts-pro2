@@ -28,7 +28,10 @@
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0",
+    "rehype-raw": "^7.0.0",
+    "remark-directive": "^4.0.0",
     "tailwind-merge": "^3.4.0",
+    "unist-util-visit": "^5.1.0",
     "vite-plugin-pwa": "^1.2.0",
     "zod": "^3.25.76"
   },

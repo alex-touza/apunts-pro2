@@ -2,9 +2,29 @@ import React, { useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { allPersonalNotes } from 'content-collections';
+import rehypeRaw from 'rehype-raw';
+import remarkDirective from 'remark-directive';
+import { visit } from 'unist-util-visit';
 import ReactMarkdown from 'react-markdown';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CodeBlock from '../components/ui/CodeBlock';
+
+const remarkDirectiveRehype = () => {
+    return (tree: any) => {
+        visit(tree, (node) => {
+            if (node.type === 'dashboard' || node.type === 'containerDirective' || node.type === 'leafDirective' || node.type === 'textDirective') {
+                const data = node.data || (node.data = {});
+                const attributes = node.attributes || {};
+                const name = node.name;
+
+                if (name !== 'div') return;
+
+                data.hName = name;
+                data.hProperties = attributes;
+            }
+        });
+    };
+};
 
 const TopicPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -39,7 +59,7 @@ const TopicPage: React.FC = () => {
                 style={{ scaleX }}
             />
 
-            <div className="pt-28 pb-20 px-4 max-w-4xl mx-auto">
+            <div className="pt-28 pb-20 px-4 sm:px-8 max-w-5xl mx-auto">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -47,25 +67,30 @@ const TopicPage: React.FC = () => {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mb-8 border-b border-white/5 pb-8"
                 >
-                    <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                    <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4 leading-tight">
                         {topic.title}
                     </h1>
                     <div className="flex items-center gap-4 text-slate-400 text-sm font-mono">
-                        <span>{topic.readTime || '5 min'} lectura</span>
-                        <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+                        <span className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            {topic.readTime || '5 min'} lectura
+                        </span>
+                        <span className="w-1 h-1 rounded-full bg-slate-700"></span>
                         <span>{topic.description}</span>
                     </div>
                 </motion.div>
 
                 {/* Content */}
-                <div className="prose prose-invert prose-lg max-w-none">
+                <div className="prose prose-invert prose-lg max-w-none heading-reset">
                     <ReactMarkdown
+                        rehypePlugins={[rehypeRaw]}
+                        remarkPlugins={[remarkDirective, remarkDirectiveRehype]}
                         components={{
                             code(props) {
                                 const { children, className, node, ...rest } = props
                                 const match = /language-(\w+)/.exec(className || '')
                                 return match ? (
-                                    <div className="not-prose my-6">
+                                    <div className="not-prose my-8 -mx-4 md:-mx-0">
                                         <CodeBlock
                                             code={String(children).replace(/\n$/, '')}
                                             language={match[1]}
@@ -73,11 +98,35 @@ const TopicPage: React.FC = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <code {...rest} className={className}>
+                                    <code {...rest} className="px-1.5 py-0.5 rounded-md bg-white/10 text-sky-300 font-mono text-[0.9em] border border-white/5">
                                         {children}
                                     </code>
                                 )
-                            }
+                            },
+                            h2: ({ ...props }) => (
+                                <h2 className="text-2xl md:text-3xl font-bold text-slate-100 mt-16 mb-6 scroll-mt-28 tracking-tight" {...props} />
+                            ),
+                            h3: ({ ...props }) => (
+                                <h3 className="text-xl font-semibold text-white mt-10 mb-4 scroll-mt-28" {...props} />
+                            ),
+                            p: ({ ...props }) => (
+                                <p className="text-slate-300 leading-8 mb-6 text-lg" {...props} />
+                            ),
+                            ul: ({ ...props }) => (
+                                <ul className="space-y-2 my-6 list-disc pl-6 marker:text-slate-500" {...props} />
+                            ),
+                            ol: ({ ...props }) => (
+                                <ol className="space-y-2 my-6 list-decimal pl-6 marker:text-slate-500 marker:font-bold" {...props} />
+                            ),
+                            li: ({ ...props }) => (
+                                <li className="text-slate-300 pl-2 leading-relaxed" {...props} />
+                            ),
+                            strong: ({ ...props }) => (
+                                <strong className="font-bold text-white" {...props} />
+                            ),
+                            blockquote: ({ ...props }) => (
+                                <blockquote className="border-l-4 border-sky-500/50 bg-sky-500/5 px-6 py-4 rounded-r-xl my-8 text-slate-300 italic not-prose" {...props} />
+                            ),
                         }}
                     >
                         {topic.content}
