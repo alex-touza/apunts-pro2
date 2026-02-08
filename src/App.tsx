@@ -1,46 +1,15 @@
-import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Hero from './components/Hero';
 import Navigation from './components/Navigation';
-import TopicPage from './components/TopicPage';
 import Background from './components/Background';
-import TopicCarousel from './components/TopicCarousel';
-import SolutionsListPage from './components/SolutionsListPage';
-import SolutionDetailPage from './components/SolutionDetailPage';
-import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
-import ProfilePage from './components/ProfilePage';
-import NewSolutionPage from './components/NewSolutionPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+import TopicPage from './pages/TopicPage';
+import SolutionsListPage from './pages/SolutionsListPage';
+import SolutionDetailPage from './pages/SolutionDetailPage';
+import NewSolutionPage from './pages/NewSolutionPage';
 import { AuthProvider } from './contexts/AuthContext';
-
-const HomePage = () => {
-  // Lock scroll on mount
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
-
-  return (
-    <div className="h-screen w-full relative z-10 flex flex-col overflow-hidden">
-
-      {/* Top: Compact Hero */}
-      <div className="flex-none pt-10 z-20 pointer-events-none">
-        {/* Make Hero text clickable but container passive */}
-        <div className="pointer-events-auto">
-          <Hero />
-        </div>
-      </div>
-
-      {/* Middle: Carousel Area */}
-      <div className="flex-1 min-h-0 relative z-10 flex flex-col justify-center -mt-4 pb-16">
-        <TopicCarousel />
-      </div>
-
-    </div>
-  );
-};
 
 function App() {
   return (

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { topics } from '../data/notes';
-import NoteSection from './NoteSection';
+import NoteSection from '../components/NoteSection';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const TopicPage: React.FC = () => {

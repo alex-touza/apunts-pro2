@@ -13,7 +13,7 @@ interface User {
 interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<void>;
-    signup: (email: string, password: string, username: string) => Promise<void>;
+    signup: (email: string, password: string, username: string, inviteCode: string) => Promise<void>;
     logout: () => Promise<void>;
     isLoading: boolean;
 }
@@ -50,30 +50,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await signInWithEmailAndPassword(auth, email, password);
     };
 
-    const signup = async (email: string, password: string, username: string) => {
-        const { createUserWithEmailAndPassword, updateProfile } = await import('firebase/auth');
+    const signup = async (email: string, password: string, username: string, inviteCode: string) => {
+        const { createUserWithEmailAndPassword, updateProfile, deleteUser } = await import('firebase/auth');
         const { doc, setDoc } = await import('firebase/firestore');
         const { db } = await import('../lib/firebase');
 
-        // 1. Create User
+        // 1. Create User (Auth)
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // 2. Update Profile
-        const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${username}`;
-        await updateProfile(user, {
-            displayName: username,
-            photoURL: avatarUrl
-        });
+        try {
+            // 2. Update Profile
+            const avatarUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${username}`;
+            await updateProfile(user, {
+                displayName: username,
+                photoURL: avatarUrl
+            });
 
-        // 3. Create Firestore Document
-        await setDoc(doc(db, 'users', user.uid), {
-            username: username,
-            email: email,
-            avatar: avatarUrl,
-            role: 'editor', // Default role
-            createdAt: new Date().toISOString()
-        });
+            // 3. Create Firestore Document (Protected by Security Rules)
+            // This will fail if the inviteCode is invalid (does not exist in 'invites' collection)
+            await setDoc(doc(db, 'users', user.uid), {
+                username: username,
+                email: email,
+                avatar: avatarUrl,
+                role: 'editor',
+                createdAt: new Date().toISOString(),
+                inviteCode: inviteCode // Required for validation rule
+            });
+        } catch (error) {
+            // If Firestore creation fails (e.g., invalid code), rollback Auth creation
+            console.error("Error creating user profile:", error);
+            await deleteUser(user);
+            throw new Error("Error de validació: Codi d'invitació no vàlid o error del sistema.");
+        }
     };
 
     const logout = async () => {

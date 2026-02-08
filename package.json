@@ -13,6 +13,8 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.18",
     "@types/prismjs": "^1.26.5",
+    "@vercel/node": "^5.5.33",
+    "cheerio": "^1.2.0",
     "clsx": "^2.1.1",
     "firebase": "^12.9.0",
     "framer-motion": "^12.33.0",

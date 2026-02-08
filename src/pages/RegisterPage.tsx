@@ -19,18 +19,10 @@ const RegisterPage = () => {
         setError('');
         setIsLoading(true);
 
-        // Security Check: Code must match environment variable
-        // If not set in env, fallback to 'PRO2-2025' for safety/testing
-        const VALID_CODE = import.meta.env.VITE_REGISTRATION_CODE || 'PRO2-2025';
-
-        if (inviteCode !== VALID_CODE) {
-            setError('Codi d\'invitació incorrecte. Demana accés a l\'administrador.');
-            setIsLoading(false);
-            return;
-        }
-
         try {
-            await signup(email, password, username);
+            // The validation of the invite code is now handled by Firestore Security Rules
+            // during the user document creation inside the signup function.
+            await signup(email, password, username, inviteCode);
             navigate('/');
         } catch (err: any) {
             console.error(err);
@@ -38,8 +30,10 @@ const RegisterPage = () => {
                 setError('Aquest correu electrònic ja està registrat.');
             } else if (err.code === 'auth/weak-password') {
                 setError('La contrasenya ha de tenir almenys 6 caràcters.');
+            } else if (err.message && err.message.includes('validació')) {
+                setError(err.message);
             } else {
-                setError('Error al registrar-se: ' + err.message);
+                setError('Error al registrar-se. Verifica el codi d\'invitació.');
             }
         } finally {
             setIsLoading(false);

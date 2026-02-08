@@ -94,3 +94,110 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* -------------------------------------------------------------------------- */
+/*                        JUTGE STATEMENT STYLES (PREMIUM)                    */
+/* -------------------------------------------------------------------------- */
+
+/* Contenidor global de l'enunciat */
+.jutge-content {
+  @apply text-slate-300 leading-relaxed font-sans text-[15px];
+}
+
+/* Títols de seccions (Input, Output, etc.) */
+.jutge-content h2,
+.jutge-content h3,
+.jutge-content h4 {
+  @apply text-white font-bold mt-6 mb-3 text-lg border-b border-white/5 pb-1;
+}
+
+/* Paràgrafs */
+.jutge-content p {
+  @apply mb-4 text-justify;
+}
+
+/* Llistes */
+.jutge-content ul,
+.jutge-content ol {
+  @apply ml-6 mb-4 list-disc space-y-1 marker:text-emerald-500;
+}
+
+.jutge-content ol {
+  @apply list-decimal;
+}
+
+/* Codi inline i variables matemàtiques */
+.jutge-content code,
+.jutge-content var,
+.jutge-content tt,
+.jutge-content kbd {
+  @apply font-mono text-emerald-400 bg-emerald-500/10 px-1 py-0.5 rounded text-sm not-italic;
+}
+
+/* Blocs de codi (Input/Output samples) */
+.jutge-content pre {
+  @apply bg-[#0b1221] p-4 rounded-lg my-4 text-sm font-mono text-slate-300 overflow-x-auto border border-white/5 shadow-inner;
+}
+
+/* Taules (usades sovint per exemples) */
+.jutge-content table {
+  @apply w-full my-6 border-collapse text-left rounded-lg overflow-hidden border border-white/10;
+}
+
+.jutge-content th {
+  @apply bg-white/5 p-3 font-bold text-slate-100 border-b border-white/10 text-xs uppercase tracking-wider;
+}
+
+.jutge-content td {
+  @apply p-3 text-slate-300 border-b border-white/5 align-top bg-white/[0.02];
+}
+
+.jutge-content tr:last-child td {
+  @apply border-b-0;
+}
+
+/* Imatges Generals de contingut (Diagrames, Il·lustracions) */
+.jutge-content .content-image {
+  @apply max-w-full h-auto rounded-lg my-6 shadow-lg border border-white/10 mx-auto block;
+}
+
+/* Badges d'arxius (PDF, ZIP, CODE) - Substitueixen les icones antigues */
+.jutge-content .file-badge {
+  @apply inline-flex items-center justify-center px-2.5 py-1 mr-2 mb-2 text-[10px] font-bold uppercase tracking-wider rounded border transition-all select-none align-middle;
+  text-decoration: none !important;
+}
+
+.jutge-content .file-badge.pdf {
+  @apply bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 hover:text-red-300;
+}
+
+.jutge-content .file-badge.zip {
+  @apply bg-blue-500/10 text-blue-400 border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/40 hover:text-blue-300;
+}
+
+.jutge-content .file-badge.code {
+  @apply bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20 hover:border-emerald-500/40 hover:text-emerald-300;
+}
+
+/* Fallback per imatges que no tenen classe assignada */
+.jutge-content img:not(.file-badge):not(.content-image) {
+  @apply max-w-full h-auto rounded-lg my-6 shadow-lg border border-white/10 mx-auto block;
+}
+
+/* Bloqueig DEFINITIU de restes de UI de Jutge per CSS (Triple seguretat) */
+.jutge-content nav,
+.jutge-content header,
+.jutge-content footer,
+.jutge-content .navbar,
+.jutge-content .menu,
+.jutge-content .ui-layout-north,
+.jutge-content .ui-layout-south,
+.jutge-content .panel-heading,
+.jutge-content button {
+  display: none !important;
+}
+
+/* MathJax (fórmules matemàtiques) */
+.jutge-content .MathJax_Display {
+  @apply overflow-x-auto overflow-y-hidden py-2 my-2 text-slate-200;
+}
