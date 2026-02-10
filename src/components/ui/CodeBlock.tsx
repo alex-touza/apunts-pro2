@@ -30,7 +30,7 @@ const CopyButton = ({title, handleCopy, copied, className}: {
 }) =>
     <button
         onClick={handleCopy}
-        className={clsx(`p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 hover:opacity-100 transition-all opacity-80 z-10 ${title ? 'top-1.5' : 'top-3'}`, className)}
+        className={clsx(`p-2  rounded-lg text-slate-400 hover:text-white hover:bg-white/10 hover:opacity-80 transition-all z-10`, !!title || 'top-3', className)}
         title="Copiar codi"
     >
         {copied ? <Check size={16} className="text-emerald-400"/> : <Copy size={16}/>}
@@ -59,19 +59,19 @@ const CodeBlock: React.FC<CodeBlockProps> = ({code, title, language = 'cpp'}) =>
 
             {title ? (
                     <div
-                        className="flex gap-2 rounded-t-2xl items-center justify-between bg-linear-to-r from-blue-800/20 to-slate-800/5 px-4 py-1 border-b border-white/10">
+                        className="flex gap-2 rounded-t-2xl items-center justify-between bg-linear-to-r from-blue-800/20 to-slate-800/5 px-4 py-1.5 border-b border-white/10">
                         <span className="text-sm font-medium text-slate-300 font-mono">{title}</span>
                         <span
-                            className={`font-mono opacity-80 hover:opacity-100 transition px-1 ml-auto  rounded-md border  ${languageColorsClass[languageNames[language].color]}`}>{languageNames[language].name}</span>
+                            className={`font-mono opacity-80 hover:opacity-100 transition px-1 h-full content-center ml-auto  rounded-md border  ${languageColorsClass[languageNames[language].color]}`}>{languageNames[language].name}</span>
 
                         <CopyButton title={title}
-                                    copied={copied} handleCopy={handleCopy}/>
+                                    copied={copied} handleCopy={handleCopy} className={"py-1.5 opacity-60 text-slate-200!"}/>
                     </div>
                 ) :
 
                 <CopyButton
                     copied={copied} handleCopy={handleCopy}
-                    className={`absolute right-3 p-2 bg-white/5`}
+                    className={`absolute right-3 p-2 opacity-30`}
                 />
             }
 
